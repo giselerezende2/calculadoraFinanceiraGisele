@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Fungi Tech</title>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Calculadora Financeira - FungiTech</h2>
+        <div class="inputs">
+            Qual é a produção mensal:<input type="number" id="input_producao" placeholder="Produção mensal (em kg)"> <br>
+            Qual é o preço vendido por Kilo: <input type="number" id="input_preco" placeholder="Preço por (Kg)"> <br>
+            Qual é o valor investido na produção: <input type="text" id="input_investido" placeholder="Valor Investido (R$)"> <br>
+
+        </div>
+        <button onclick="calcular()">Calcular</button><br>
+    </div>
+    <div class="container-mensagem">
+        <div id="div_mensagem" class="result">
+            <div id="mensagem"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function calcular() {
+        var producao = Number(input_producao.value); // Produção mensal do produtor de cogumelo
+        var precoKiloCliente = Number(input_preco.value); // Preço que o cliente vende por kilo do cogumelo
+        var ValorInvestido = Number(input_investido.value); // Valor investido na produção 
+        var precoKiloMercado = 27; // Preço do kilo do cogumelo no mercado 
+        var perda = 0.2; // O produtor perde 20% da produção em kg
+        var lucroPrecoDoCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
+        var totalVendido = producao * (1 - perda); // Lucro de apenas 80% da produção total em kg
+        var lucroSemPerda = producao * precoKiloMercado; // Lucro da produção total em R$
+        var lucroComPerda = totalVendido * precoKiloMercado; // Lucro de apenas 80% da produção total em R$
+        var perdaMensal = producao * perda; // Perda de dinheiro mensal
+        var perdaAnual = perdaMensal * 12; // Perda de dinheiro anual 
+        var lucroPrecoDoClientePerda = totalVendido * precoKiloCliente; // Lucro da produção se o produtor vender o kg de acordo com o seu preço
+        mensagem.innerHTML = `O cliente terá um lucro de R$${lucroPrecoDoCliente.toFixed(2)}, caso ele venda por R$${precoKiloCliente}. <br> Se o cliente perder 20% do seu cultivo de cogumelos, mas ainda vender por R$${precoKiloCliente} terá um lucro de: R$${lucroPrecoDoClientePerda.toFixed(2)}. <br> 
+        O total vendido com o 20% da perda na produção foi: ${totalVendido}Kg. <br> 
+        O lucro seria de R$${lucroSemPerda.toFixed(2)} se não houvesse a perda de 20% na produção e caso ele venda por R$${precoKiloMercado} o valor do Shitake no mercado. <br> 
+        O lucro com a perda de 20% na produção foi: R$${lucroComPerda.toFixed(2)}. <br> 
+        A perda Mensal em reais foi de: R$${perdaMensal.toFixed(2)}. <br>
+         A perda Anual em reais foi de: R$${perdaAnual.toFixed(2)}. <br> `;
+    }
+
+
+</script>
