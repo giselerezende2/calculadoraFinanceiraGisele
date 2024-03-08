@@ -12,17 +12,21 @@
     <div class="container">
         <h2>Calculadora Financeira - FungiTech</h2>
         <div class="inputs">
-            Qual é a produção mensal:<input type="number" id="input_producao" placeholder="Produção mensal (em kg)"> <br>
+            Qual é a produção mensal:<input type="number" id="input_producao" placeholder="Produção mensal (em kg)">
+            <br>
             Qual é o preço vendido por Kilo: <input type="number" id="input_preco" placeholder="Preço por (Kg)"> <br>
-            Qual é o valor investido na produção: <input type="text" id="input_investido" placeholder="Valor Investido (R$)"> <br>
+            Qual é o valor investido na produção: <input type="number" id="input_investido"
+                placeholder="Valor Investido (R$)"> <br>
+            Qual é a perda percentual da produção: <input type="number" id="input_perdaCliente"
+                placeholder="Perda Percentual (%)"><br>
 
         </div>
         <button onclick="calcular()">Calcular</button><br>
     </div>
     <div class="container-mensagem">
-        <div id="div_mensagem" class="result">
-            <div id="mensagem"></div>
-        </div>
+        <div id="div_mensagem_mercado" class="result"></div>
+        <div id="div_mensagem_cliente" class="result"></div>
+        <div id="div_mensagem_comparacao" class="result"></div>
     </div>
 </body>
 
@@ -31,23 +35,54 @@
     function calcular() {
         var producao = Number(input_producao.value); // Produção mensal do produtor de cogumelo
         var precoKiloCliente = Number(input_preco.value); // Preço que o cliente vende por kilo do cogumelo
-        var ValorInvestido = Number(input_investido.value); // Valor investido na produção 
+        var valorInvestido = Number(input_investido.value); // Valor investido na produção 
+        var perdaCliente = Number(input_perdaCliente.value); // Perda percentual do produtor
+        // valores do mercado
         var precoKiloMercado = 27; // Preço do kilo do cogumelo no mercado 
-        var perda = 0.2; // O produtor perde 20% da produção em kg
-        var lucroPrecoDoCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
-        var totalVendido = producao * (1 - perda); // Lucro de apenas 80% da produção total em kg
+        var perdaMercado = 0.2; // O produtor perde 20% da produção em kg
+        var totalVendido = producao * (1 - perdaMercado); // Lucro de apenas 80% da produção total em kg
         var lucroSemPerda = producao * precoKiloMercado; // Lucro da produção total em R$
         var lucroComPerda = totalVendido * precoKiloMercado; // Lucro de apenas 80% da produção total em R$
-        var perdaMensal = producao * perda; // Perda de dinheiro mensal
-        var perdaAnual = perdaMensal * 12; // Perda de dinheiro anual 
-        var lucroPrecoDoClientePerda = totalVendido * precoKiloCliente; // Lucro da produção se o produtor vender o kg de acordo com o seu preço
-        mensagem.innerHTML = `O cliente terá um lucro de R$${lucroPrecoDoCliente.toFixed(2)}, caso ele venda por R$${precoKiloCliente}. <br> Se o cliente perder 20% do seu cultivo de cogumelos, mas ainda vender por R$${precoKiloCliente} terá um lucro de: R$${lucroPrecoDoClientePerda.toFixed(2)}. <br> 
-        O total vendido com o 20% da perda na produção foi: ${totalVendido}Kg. <br> 
-        O lucro seria de R$${lucroSemPerda.toFixed(2)} se não houvesse a perda de 20% na produção e caso ele venda por R$${precoKiloMercado} o valor do Shitake no mercado. <br> 
-        O lucro com a perda de 20% na produção foi: R$${lucroComPerda.toFixed(2)}. <br> 
-        A perda Mensal em reais foi de: R$${perdaMensal.toFixed(2)}. <br>
-         A perda Anual em reais foi de: R$${perdaAnual.toFixed(2)}. <br> `;
+        var perdaMensalM = (producao * perdaMercado) * 27; // Perda de dinheiro mensal
+        var perdaAnualM = perdaMensalM * 12; // Perda de dinheiro anual
+        var lucroTotal = lucroSemPerda - valorInvestido; // 
+        // valores do cliente
+        var vendaTotal = producao * (1 - perdaCliente); // Lucro da produção que não foi perdida em kg 
+        var lucroCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
+        var lucroPerdaCliente = vendaTotal * precoKiloCliente; // Lucro da produção se o produtor vender o kg de acordo com o seu preço
+        var perdaMensalP = (producao * perdaCliente) * precoKiloCliente; // Perda de dinheiro mensal
+        var perdaAnualP = perdaMensalP * 12; // Perda de dinheiro anual
+        var lucroLiq = lucroCliente - valorInvestido; // 
+        var projecao = perdaCliente * precoKiloCliente; // o valor que o cliente ganha ao obter o nosso projeto
+        
+        // Valores do mercado
+        div_mensagem_mercado.innerHTML = `<h3>Valores do Mercado:</h3>` +
+            `<p>Preço por Kilo: R$${precoKiloMercado}</p>` +
+            `<p>Perda Percentual: ` + (perdaMercado * 100) + `%</p>` +
+            `<p>Lucro Total sem Perda: R$${lucroSemPerda}</p>` +
+            `<p>Lucro Total com Perda: R$${lucroComPerda}</p>` +
+            `<p>Perda Mensal: R$${perdaMensalM}</p>` +
+            `<p>Perda Anual: R$${perdaAnualM}</p>`;
+
+        // Valores do cliente
+        div_mensagem_cliente.innerHTML = `<h3>Valores do Cliente:</h3>` 
+            `<p>Lucro Total do Cliente: R$${lucroCliente}</p>` 
+            `<p>Lucro Total do Cliente com Perda: R$${lucroPerdaCliente}</p>` 
+            `<p>Perda Mensal do Cliente: R$${perdaMensalP}</p>` 
+            `<p>Perda Anual do Cliente: R$${perdaAnualP}</p>` 
+            `<p>Lucro Líquido: R$${lucroLiq}</p>` 
+            `<p>Projeção de Lucro do Cliente: R$${projecao}</p>`;
+
+        // Comparação
+        if (perdaMensalM > perdaMensalP) {
+            div_mensagem_comparacao.innerHTML = `Sua perda foi menor que a do mercado`;
+        } else {
+            div_mensagem_comparacao.innerHTML = `Sua perda foi maior que a do mercado`;
+        }
+        if (lucroTotal > lucroLiq) {
+            div_mensagem_comparacao.innerHTML += `<br> Seu lucro foi inferior ao do mercado`;
+        } else {
+            div_mensagem_comparacao.innerHTML += `<br> Seu lucro foi superior ao do mercado`;
+        }
     }
-
-
 </script>
