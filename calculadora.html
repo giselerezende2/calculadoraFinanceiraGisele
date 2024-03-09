@@ -36,7 +36,7 @@
         var producao = Number(input_producao.value); // Produção mensal do produtor de cogumelo
         var precoKiloCliente = Number(input_preco.value); // Preço que o cliente vende por kilo do cogumelo
         var valorInvestido = Number(input_investido.value); // Valor investido na produção 
-        var perdaCliente = Number(input_perdaCliente.value); // Perda percentual do produtor
+        var perda = Number(input_perdaCliente.value); // Perda percentual do produtor
         // valores do mercado
         var precoKiloMercado = 27; // Preço do kilo do cogumelo no mercado 
         var perdaMercado = 0.2; // O produtor perde 20% da produção em kg
@@ -47,6 +47,7 @@
         var perdaAnualM = perdaMensalM * 12; // Perda de dinheiro anual
         var lucroTotal = lucroSemPerda - valorInvestido; // 
         // valores do cliente
+        var perdaCliente = perda * 100; // Transformar a perda em porcentagem 
         var vendaTotal = producao * (1 - perdaCliente); // Lucro da produção que não foi perdida em kg 
         var lucroCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
         var lucroPerdaCliente = vendaTotal * precoKiloCliente; // Lucro da produção se o produtor vender o kg de acordo com o seu preço
@@ -65,12 +66,12 @@
             `<p>Perda Anual: R$${perdaAnualM}</p>`;
 
         // Valores do cliente
-        div_mensagem_cliente.innerHTML = `<h3>Valores do Cliente:</h3>` 
-            `<p>Lucro Total do Cliente: R$${lucroCliente}</p>` 
-            `<p>Lucro Total do Cliente com Perda: R$${lucroPerdaCliente}</p>` 
-            `<p>Perda Mensal do Cliente: R$${perdaMensalP}</p>` 
-            `<p>Perda Anual do Cliente: R$${perdaAnualP}</p>` 
-            `<p>Lucro Líquido: R$${lucroLiq}</p>` 
+        div_mensagem_cliente.innerHTML = `<h3>Valores do Cliente:</h3>` +
+            `<p>Lucro Total do Cliente: R$${lucroCliente}</p>` +
+            `<p>Lucro Total do Cliente com Perda: R$${lucroPerdaCliente}</p>` +
+            `<p>Perda Mensal do Cliente: R$${perdaMensalP}</p>` +
+            `<p>Perda Anual do Cliente: R$${perdaAnualP}</p>` +
+            `<p>Lucro Líquido: R$${lucroLiq}</p>` +
             `<p>Projeção de Lucro do Cliente: R$${projecao}</p>`;
 
         // Comparação
