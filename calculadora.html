@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <div class="header">
+        <img src="../../img/Fungi TECH tecnology.png" alt="Logo" class="logo">
+    </div>
+
     <div class="container">
         <h2>Calculadora Financeira - FungiTech</h2>
         <div class="inputs">
@@ -47,14 +51,13 @@
         var perdaAnualM = perdaMensalM * 12; // Perda de dinheiro anual
         var lucroTotal = lucroSemPerda - valorInvestido; // 
         // valores do cliente
-        var perdaCliente = perda * 100; // Transformar a perda em porcentagem 
+        var perdaCliente = perda / 100; // Transformar a perda em porcentagem 
         var vendaTotal = producao * (1 - perdaCliente); // Lucro da produção que não foi perdida em kg 
-        var lucroCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
         var lucroPerdaCliente = vendaTotal * precoKiloCliente; // Lucro da produção se o produtor vender o kg de acordo com o seu preço
         var perdaMensalP = (producao * perdaCliente) * precoKiloCliente; // Perda de dinheiro mensal
         var perdaAnualP = perdaMensalP * 12; // Perda de dinheiro anual
+        var lucroCliente = producao * precoKiloCliente; // Para saber o lucro do cliente com o preço vendido por kilo
         var lucroLiq = lucroCliente - valorInvestido; // 
-        var projecao = perdaCliente * precoKiloCliente; // o valor que o cliente ganha ao obter o nosso projeto
         
         // Valores do mercado
         div_mensagem_mercado.innerHTML = `<h3>Valores do Mercado:</h3>` +
@@ -71,19 +74,19 @@
             `<p>Lucro Total do Cliente com Perda: R$${lucroPerdaCliente}</p>` +
             `<p>Perda Mensal do Cliente: R$${perdaMensalP}</p>` +
             `<p>Perda Anual do Cliente: R$${perdaAnualP}</p>` +
-            `<p>Lucro Líquido: R$${lucroLiq}</p>` +
-            `<p>Projeção de Lucro do Cliente: R$${projecao}</p>`;
+            `<p>Lucro Líquido: R$${lucroLiq}</p>`;
 
         // Comparação
         if (perdaMensalM > perdaMensalP) {
-            div_mensagem_comparacao.innerHTML = `Sua perda foi menor que a do mercado`;
+            div_mensagem_comparacao.innerHTML = `<h4 style="color: green;">Sua perda foi menor que a do mercado</h4>`;
         } else {
-            div_mensagem_comparacao.innerHTML = `Sua perda foi maior que a do mercado`;
+            div_mensagem_comparacao.innerHTML = `<h4 style="color: red;">Sua perda foi maior que a do mercado</h4>`;
         }
         if (lucroTotal > lucroLiq) {
-            div_mensagem_comparacao.innerHTML += `<br> Seu lucro foi inferior ao do mercado`;
+            div_mensagem_comparacao.innerHTML += `<br> <h4 style="color: red;">Seu lucro foi inferior ao do mercado</h4>`;
         } else {
-            div_mensagem_comparacao.innerHTML += `<br> Seu lucro foi superior ao do mercado`;
+            div_mensagem_comparacao.innerHTML += `<br><h4 style="color: green;"> Seu lucro foi superior ao do mercado</h4>`;
         }
     }
 </script>
+
